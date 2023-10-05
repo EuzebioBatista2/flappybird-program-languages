@@ -1,6 +1,15 @@
 <template>
   <div class="container font background">
     <div class="row background-sky">
+      <div v-if="onGame == false" style="position: absolute;">
+        <modal-component nick="nome" id="GameModal">
+          <template v-slot:content>
+            <div class="form-group">
+              {{ data.userId }} - {{ data.score }} - {{  data.name }}
+            </div>
+          </template>
+        </modal-component>
+      </div>
       <div class="col-12 " style="padding: 0px;">
         <div class="col-12 background" style="padding: 0px;" ref="backgroundSky" @click="birdUp()">
           <img :src="'/images/' + char + '.png'" alt="linguagem do jogador" class="imageChar" ref="bird" :style="'top: ' + birdTop + 'px;'">
@@ -20,10 +29,11 @@
 
 <script>
 export default {
-  props: ['char'],
+  props: ['char', 'id'],
   data() {
     return {
       barriers: [],
+      url: 'http://127.0.0.1:8000/score',
       currentWidth: '',
       spaceWidth: 350,
       middleWidth: '',
@@ -32,8 +42,8 @@ export default {
       heightTop: -1,
       heightBottom: -1,
       onGame: true,
-      barrierPosition: -1
-
+      barrierPosition: -1,
+      data: []
     };
   },
   methods: {
@@ -60,6 +70,7 @@ export default {
       const position = this.barriers[4].position + this.spaceWidth
       this.barriers.push({ heightTop, heightBottom, position })
     },
+
     updateCurrentWidth() {
       const backgroundSky = this.$refs.backgroundSky
       this.currentWidth = backgroundSky.getBoundingClientRect().width
@@ -76,7 +87,6 @@ export default {
     },
 
     birdUp() {
-      
       if(this.onGame == true) {
         if(this.birdTop - 50 < -2) {
           this.birdTop = -2
@@ -85,11 +95,45 @@ export default {
         }
       }
     },
+
     birdDown () {
       if(this.birdTop >= -2 && this.birdTop <= 548) {
         this.birdTop += 1
       }
+    },
+
+    save() {
+      let formData = new FormData()
+
+      formData.append('userId', this.id)
+      formData.append('score', this.score)
+
+      let config = {
+        'Accept': 'application/json'
+      }
+
+      axios.post(this.url, formData, config)
+        .then(response => console.log(response.data))
+    },
+
+    deleteUser() {
+      axios.delete(this.url + '/' + 'user' + '/' + this.id)
+    },
+
+    checkScoreDB() {
+      axios.get(this.url + '/' + 'user' + '/' + this.id)
+        .then((response) => {
+          this.data = response.data
+          if(this.score >= response.data.score) {
+            this.deleteUser()
+            this.save()
+          }
+        })
+        .catch(() => {
+          this.save()
+        })
     }
+
   },
   mounted() {
     this.updateCurrentWidth()
@@ -128,6 +172,7 @@ export default {
           if(this.barriers[this.barrierPosition].position < this.$refs.bird.offsetLeft + 47) {
             this.birdTop = this.heightTop - 1
           }
+          this.checkScoreDB()
         }
       }
 
@@ -167,7 +212,7 @@ export default {
 }
 
 .background-sky {
-  background-image: url('/background/sky-clouds.gif');
+  background-image: url('/background/sky.gif');
   background-size: cover;
   height: 600px;
   width: 100%;

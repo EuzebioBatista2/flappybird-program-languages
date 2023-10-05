@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-  <home-game-component char="{{$data}}"></home-game-component>
+  <home-game-component char="{{$data}}" id="{{$id}}"></home-game-component>
 @endsection

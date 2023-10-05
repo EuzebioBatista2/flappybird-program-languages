@@ -27,6 +27,9 @@ app.component('register-component', RegisterComponent);
 import HomeGameComponent from './components/HomeGameComponent.vue';
 app.component('home-game-component', HomeGameComponent);
 
+import ModalComponent from './components/ModalComponent.vue';
+app.component('modal-component', ModalComponent);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

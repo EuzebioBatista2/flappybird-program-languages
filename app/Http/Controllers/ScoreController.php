@@ -15,6 +15,21 @@ class ScoreController extends Controller
     //
   }
 
+  public function showByUserId($userId) 
+  {
+    $score = Score::where('userId', $userId)->first();
+
+    if(!$score) {
+      return response()->json(['error' => 'dados não encontrado'], 404);
+    }
+    return response()->json($score);
+  }
+
+  public function deleteByUserId($userId) 
+  {
+    Score::where('userId', $userId)->first()->delete();
+  }
+
   /**
    * Show the form for creating a new resource.
    */
@@ -29,7 +44,7 @@ class ScoreController extends Controller
   public function store(Request $request)
   {
     //
-    
+    Score::create($request->all());
   }
 
   /**
