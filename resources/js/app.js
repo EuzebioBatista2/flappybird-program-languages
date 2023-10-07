@@ -6,6 +6,7 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+import { createStore } from 'vuex'
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -13,7 +14,14 @@ import { createApp } from 'vue';
  * to use in your application's views. An example is included for you.
  */
 
+const store = createStore({
+  state: {
+    onGame: false,
+  },
+})
+
 const app = createApp({});
+app.use(store)
 
 import ExampleComponent from './components/ExampleComponent.vue';
 app.component('example-component', ExampleComponent);
@@ -27,8 +35,11 @@ app.component('register-component', RegisterComponent);
 import HomeGameComponent from './components/HomeGameComponent.vue';
 app.component('home-game-component', HomeGameComponent);
 
-import ModalComponent from './components/ModalComponent.vue';
-app.component('modal-component', ModalComponent);
+import EndGameModalComponent from './components/EndGameModalComponent.vue';
+app.component('end-modal-component', EndGameModalComponent);
+
+import StartGameModalComponent from './components/StartGameModalComponent.vue';
+app.component('start-modal-component', StartGameModalComponent);
 
 /**
  * The following block of code may be used to automatically register your

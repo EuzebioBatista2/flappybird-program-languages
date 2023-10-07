@@ -17,12 +17,15 @@ class ScoreController extends Controller
 
   public function showByUserId($userId) 
   {
-    $score = Score::where('userId', $userId)->first();
+    $score = Score::with(['user'])->where('userId', $userId)->first();
 
-    if(!$score) {
-      return response()->json(['error' => 'dados não encontrado'], 404);
+
+    if(isset($score)) {
+      return response()->json($score);
+
     }
-    return response()->json($score);
+
+    return response()->json(['error' => 'dados não encontrado'], 404);
   }
 
   public function deleteByUserId($userId) 

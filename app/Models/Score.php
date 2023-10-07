@@ -9,4 +9,8 @@ class Score extends Model
 {
     use HasFactory;
     protected $fillable = ['userId', 'score'];
+
+    public function user() {
+      return $this->hasOne('App\Models\User', 'id', 'userId');
+    }
 }

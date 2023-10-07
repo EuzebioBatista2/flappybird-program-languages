@@ -1,18 +1,26 @@
 <template>
   <div class="container font background">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#startGame">
+      Launch static backdrop modal
+    </button>
+    <start-game-modal-component></start-game-modal-component>
+    <div v-if="data.user" style="position: absolute; height: 300px; width: 300px;">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#endGame"
+        ref="buttonGame"></button>
+      <end-modal-component :username="data.user.name" id="endGame" :character="data.user.character">
+        <template v-slot:content>
+          <div>
+            <h5>Pontuação atual: {{ score }}</h5>
+            <h5>Recorde: {{ data.score }}</h5>
+          </div>
+        </template>
+      </end-modal-component>
+    </div>
     <div class="row background-sky">
-      <div v-if="onGame == false" style="position: absolute;">
-        <modal-component nick="nome" id="GameModal">
-          <template v-slot:content>
-            <div class="form-group">
-              {{ data.userId }} - {{ data.score }} - {{  data.name }}
-            </div>
-          </template>
-        </modal-component>
-      </div>
       <div class="col-12 " style="padding: 0px;">
         <div class="col-12 background" style="padding: 0px;" ref="backgroundSky" @click="birdUp()">
-          <img :src="'/images/' + char + '.png'" alt="linguagem do jogador" class="imageChar" ref="bird" :style="'top: ' + birdTop + 'px;'">
+          <img :src="'/images/' + char + '.png'" alt="linguagem do jogador" class="imageChar" ref="bird"
+            :style="'top: ' + birdTop + 'px;'">
           <div v-for="(barrier, index) in barriers" :key="index" class="pair-of-barriers"
             :style="'left: ' + barrier.position + 'px;'">
             <div class="barrier">
@@ -28,7 +36,9 @@
 </template>
 
 <script>
+import StartGameModalComponent from './StartGameModalComponent.vue';
 export default {
+  components: { StartGameModalComponent },
   props: ['char', 'id'],
   data() {
     return {
@@ -87,8 +97,8 @@ export default {
     },
 
     birdUp() {
-      if(this.onGame == true) {
-        if(this.birdTop - 50 < -2) {
+      if (this.onGame == true) {
+        if (this.birdTop - 50 < -2) {
           this.birdTop = -2
         } else {
           this.birdTop -= 50
@@ -96,8 +106,8 @@ export default {
       }
     },
 
-    birdDown () {
-      if(this.birdTop >= -2 && this.birdTop <= 548) {
+    birdDown() {
+      if (this.birdTop >= -2 && this.birdTop <= 548) {
         this.birdTop += 1
       }
     },
@@ -123,8 +133,9 @@ export default {
     checkScoreDB() {
       axios.get(this.url + '/' + 'user' + '/' + this.id)
         .then((response) => {
+          console.log(response.data)
           this.data = response.data
-          if(this.score >= response.data.score) {
+          if (this.score >= response.data.score) {
             this.deleteUser()
             this.save()
           }
@@ -132,55 +143,63 @@ export default {
         .catch(() => {
           this.save()
         })
-    }
+    },
+    startGame() {
+      let intervalGame = setInterval(() => {
+        this.loadPipes()
+        if (this.barriers[0].position <= -130) {
+          this.updateBarriers()
+        }
 
+        if (this.barriers.some(barrier => barrier.position === this.$refs.bird.offsetLeft - 82)) {
+          this.score += 1
+          this.heightBottom = -1
+          this.heightTop = -1
+        }
+
+        if (this.barriers.some(barrier => barrier.position === this.$refs.bird.offsetLeft + 47)) {
+          const index = this.barriers.findIndex(barrier => barrier.position === this.$refs.bird.offsetLeft + 47)
+          this.heightTop = this.barriers[index].heightTop
+          this.heightBottom = this.barriers[index].heightBottom
+          this.barrierPosition = index
+        }
+
+        if (this.heightBottom != -1 && this.heightTop != -1) {
+
+
+          if (this.birdTop < this.heightTop || 549 - this.birdTop < this.heightBottom) {
+            clearInterval(intervalGame)
+            clearInterval(intervalBird)
+            console.log('Posição do passaro topo', this.birdTop)
+            console.log('Posição do barreira topo', this.barriers[this.barrierPosition].heightTop)
+            console.log('Posição X do barreira', this.barriers[this.barrierPosition].position)
+            console.log('Posição X do passaro', this.middleWidth)
+            this.onGame = false
+            if (this.barriers[this.barrierPosition].position < this.$refs.bird.offsetLeft + 47) {
+              this.birdTop = this.heightTop - 1
+            }
+            this.checkScoreDB()
+          }
+        }
+
+      }, 5)
+
+      let intervalBird = setInterval(() => {
+        this.birdDown()
+      }, 7)
+    }
   },
+  updated() {
+    if (this.data.user) {
+      const modalButton = this.$refs.buttonGame;
+      modalButton.click();
+    }
+  },
+  
   mounted() {
     this.updateCurrentWidth()
     this.createBarrier(600, 250);
-
-    let intervalGame = setInterval(() => {
-      this.loadPipes()
-      if (this.barriers[0].position <= -130) {
-        this.updateBarriers()
-      }
-
-      if(this.barriers.some(barrier => barrier.position === this.$refs.bird.offsetLeft - 82)) {
-        this.score += 1
-        this.heightBottom = -1
-        this.heightTop = -1
-      }
-
-      if(this.barriers.some(barrier => barrier.position === this.$refs.bird.offsetLeft + 47)) {
-        const index = this.barriers.findIndex(barrier => barrier.position === this.$refs.bird.offsetLeft + 47)
-        this.heightTop = this.barriers[index].heightTop
-        this.heightBottom = this.barriers[index].heightBottom
-        this.barrierPosition = index
-      }
-
-      if(this.heightBottom != -1 && this.heightTop != -1) {
-        
-        
-        if(this.birdTop < this.heightTop || 549 - this.birdTop < this.heightBottom) {
-          clearInterval(intervalGame) 
-          clearInterval(intervalBird)
-          console.log('Posição do passaro topo', this.birdTop)
-          console.log('Posição do barreira topo', this.barriers[this.barrierPosition].heightTop)
-          console.log('Posição X do barreira', this.barriers[this.barrierPosition].position)
-          console.log('Posição X do passaro', this.middleWidth)
-          this.onGame = false
-          if(this.barriers[this.barrierPosition].position < this.$refs.bird.offsetLeft + 47) {
-            this.birdTop = this.heightTop - 1
-          }
-          this.checkScoreDB()
-        }
-      }
-
-    }, 5)
-
-    let intervalBird = setInterval(() => {
-      this.birdDown()
-    }, 7)
+    this.onGame = $store.state.onGame
 
     window.addEventListener('resize', this.updateCurrentWidth)
   }
