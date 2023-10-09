@@ -41,6 +41,9 @@ app.component('end-modal-component', EndGameModalComponent);
 import StartGameModalComponent from './components/StartGameModalComponent.vue';
 app.component('start-modal-component', StartGameModalComponent);
 
+import HomePageComponent from './components/HomePageComponent.vue';
+app.component('home-page-component', HomePageComponent);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

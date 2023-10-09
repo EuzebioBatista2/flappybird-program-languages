@@ -1,25 +1,34 @@
 <template>
   <div class="container font background">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#startGame">
-      Launch static backdrop modal
-    </button>
+    
     <start-game-modal-component></start-game-modal-component>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#startGame" style="display: none;"
+    ref="buttonStartGame"></button>
     <div v-if="data.user" style="position: absolute; height: 300px; width: 300px;">
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#endGame"
-        ref="buttonGame"></button>
+        ref="buttonGame" style="display: none;"></button>
+        
       <end-modal-component :username="data.user.name" id="endGame" :character="data.user.character">
         <template v-slot:content>
-          <div>
-            <h5>Pontuação atual: {{ score }}</h5>
-            <h5>Recorde: {{ data.score }}</h5>
+          <div class="container">
+            <h5 class="font">Pontuação atual: {{ score }}</h5>
           </div>
+          <div class="container">
+            <h5 class="font">Recorde: {{ data.score > score ? data.score : score }}</h5>
+          </div>
+          <div class="container">
+            <img src="images/birdDown.png" alt="passaro caído" height="150">
+          </div>
+
         </template>
       </end-modal-component>
     </div>
     <div class="row background-sky">
+      
       <div class="col-12 " style="padding: 0px;">
+        
         <div class="col-12 background" style="padding: 0px;" ref="backgroundSky" @click="birdUp()">
-          <img :src="'/images/' + char + '.png'" alt="linguagem do jogador" class="imageChar" ref="bird"
+          <img :src="'gif/' + char + '.gif'" alt="passaro" class="imageChar" ref="bird"
             :style="'top: ' + birdTop + 'px;'">
           <div v-for="(barrier, index) in barriers" :key="index" class="pair-of-barriers"
             :style="'left: ' + barrier.position + 'px;'">
@@ -107,7 +116,7 @@ export default {
     },
 
     birdDown() {
-      if (this.birdTop >= -2 && this.birdTop <= 548) {
+      if (this.birdTop >= -2 && this.birdTop <= 558) {
         this.birdTop += 1
       }
     },
@@ -123,7 +132,6 @@ export default {
       }
 
       axios.post(this.url, formData, config)
-        .then(response => console.log(response.data))
     },
 
     deleteUser() {
@@ -133,15 +141,13 @@ export default {
     checkScoreDB() {
       axios.get(this.url + '/' + 'user' + '/' + this.id)
         .then((response) => {
-          console.log(response.data)
           this.data = response.data
-          if (this.score >= response.data.score) {
+          if (this.score > response.data.score && response.data != null) {
             this.deleteUser()
             this.save()
+          } else if(response.data === null) {
+            this.save()
           }
-        })
-        .catch(() => {
-          this.save()
         })
     },
     startGame() {
@@ -166,17 +172,12 @@ export default {
 
         if (this.heightBottom != -1 && this.heightTop != -1) {
 
-
-          if (this.birdTop < this.heightTop || 549 - this.birdTop < this.heightBottom) {
+          if (this.birdTop < this.heightTop || 559 - this.birdTop < this.heightBottom) {
             clearInterval(intervalGame)
             clearInterval(intervalBird)
-            console.log('Posição do passaro topo', this.birdTop)
-            console.log('Posição do barreira topo', this.barriers[this.barrierPosition].heightTop)
-            console.log('Posição X do barreira', this.barriers[this.barrierPosition].position)
-            console.log('Posição X do passaro', this.middleWidth)
             this.onGame = false
-            if (this.barriers[this.barrierPosition].position < this.$refs.bird.offsetLeft + 47) {
-              this.birdTop = this.heightTop - 1
+            if (this.birdTop < this.heightTop && this.barriers[this.barrierPosition].position < this.$refs.bird.offsetLeft + 47) {
+              this.birdTop = this.heightTop
             }
             this.checkScoreDB()
           }
@@ -191,15 +192,21 @@ export default {
   },
   updated() {
     if (this.data.user) {
-      const modalButton = this.$refs.buttonGame;
-      modalButton.click();
+      const modalButton = this.$refs.buttonGame
+      modalButton.click()
+    }
+
+    if(this.$store.state.onGame) {
+      this.startGame()
+      this.$store.state.onGame = false
     }
   },
   
   mounted() {
     this.updateCurrentWidth()
     this.createBarrier(600, 250);
-    this.onGame = $store.state.onGame
+    const modalStartButton = this.$refs.buttonStartGame
+    modalStartButton.click()
 
     window.addEventListener('resize', this.updateCurrentWidth)
   }
@@ -244,7 +251,7 @@ export default {
 .imageChar {
   position: absolute;
   width: 48px;
-  height: 48px;
+  height: 38px;
   left: calc(50% - 30px);
   bottom: 50%;
 }
@@ -290,5 +297,14 @@ export default {
   height: 100%;
   font-size: 20px;
   background: transparent;
+}
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.font {
+  font-size: 10px;
 }
 </style>

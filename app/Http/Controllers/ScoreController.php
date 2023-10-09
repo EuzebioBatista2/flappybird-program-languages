@@ -21,11 +21,10 @@ class ScoreController extends Controller
 
 
     if(isset($score)) {
-      return response()->json($score);
-
+      return $score;
+    } else {
+      return null;
     }
-
-    return response()->json(['error' => 'dados não encontrado'], 404);
   }
 
   public function deleteByUserId($userId) 
