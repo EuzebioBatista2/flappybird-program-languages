@@ -4,10 +4,10 @@
     <start-game-modal-component></start-game-modal-component>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#startGame" style="display: none;"
     ref="buttonStartGame"></button>
+    
     <div v-if="data.user" style="position: absolute; height: 300px; width: 300px;">
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#endGame"
-        ref="buttonGame" style="display: none;"></button>
-        
+      ref="buttonGame" style="display: none;"></button>
       <end-modal-component :username="data.user.name" id="endGame" :character="data.user.character">
         <template v-slot:content>
           <div class="container">
@@ -145,8 +145,18 @@ export default {
           if (this.score > response.data.score && response.data != null) {
             this.deleteUser()
             this.save()
-          } else if(response.data === null) {
+          } else if(!response.data) {
             this.save()
+          }
+        })
+        .then(() => {
+          axios.get(this.url + '/' + 'user' + '/' + this.id)
+            .then((response) => {
+              this.data = response.data
+            })
+          if(this.data.user) {
+            const modalButton = this.$refs.buttonGame
+            modalButton.click()
           }
         })
     },
@@ -191,10 +201,6 @@ export default {
     }
   },
   updated() {
-    if (this.data.user) {
-      const modalButton = this.$refs.buttonGame
-      modalButton.click()
-    }
 
     if(this.$store.state.onGame) {
       this.startGame()

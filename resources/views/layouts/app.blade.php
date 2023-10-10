@@ -18,7 +18,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
   </head>
 
-  <body style="height:100vh; min-height: 650px; width: 100%;">
+  <body style="height:100vh; min-height: 650px; width: 100%; background: url('gif/bird.gif'); background-size: cover; background-repeat: no-repeat; background-position: center">
     <div id="app" style="height: 100%;">
       @if (Route::has('home'))
         

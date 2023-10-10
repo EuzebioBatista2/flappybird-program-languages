@@ -24,8 +24,8 @@
                 <label for="password" class="col-md-4 col-form-label text-md-end">Senha</label>
 
                 <div class="col-md-6">
-                  <input id="password" type="password" :class="error.name ? 'is-invalid form-control' : 'form-control'" name="password"
-                    autocomplete="current-password">
+                  <input id="password" type="password" :class="error.name ? 'is-invalid form-control' : 'form-control'"
+                    name="password" autocomplete="current-password">
                   <span v-if="error.password" class="invalid-feedback" style="font-size: 10px;" role="alert">
                     <strong>{{ error.password[0] }}</strong>
                   </span>
@@ -46,11 +46,15 @@
 
               <div class="row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-primary">
-                    Login
-                  </button>
-
-                  <a class="btn btn-link" href="#">
+                  <div class="buttons">
+                    <button type="submit" class="btn btn-primary">
+                      Login
+                    </button>
+                    <a class="btn btn-secondary" href="/">
+                      Página inicial
+                    </a>
+                  </div>
+                  <a class="btn btn-link" href="/password/reset">
                     Esqueci a senha
                   </a>
                 </div>
@@ -71,17 +75,23 @@ export default {
 </script>
 
 <style scoped>
-  @import '../../css/fontGame.css';
+@import '../../css/fontGame.css';
 
-  .font {
-    font-family: 'supply-Center';
-  }
-  .background-login {
-    height: 100%;
-    width: 100%;
-    min-height: 650px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.font {
+  font-family: 'supply-Center';
+}
+
+.background-login {
+  height: 100%;
+  width: 100%;
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
 </style>

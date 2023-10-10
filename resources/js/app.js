@@ -44,6 +44,12 @@ app.component('start-modal-component', StartGameModalComponent);
 import HomePageComponent from './components/HomePageComponent.vue';
 app.component('home-page-component', HomePageComponent);
 
+import ButtonLinkComponent from './components/ButtonLinkComponent.vue';
+app.component('button-link-component', ButtonLinkComponent);
+
+import RankComponent from './components/RankComponent.vue';
+app.component('rank-component', RankComponent);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

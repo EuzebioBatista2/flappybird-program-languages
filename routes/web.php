@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RankController;
 use App\Http\Controllers\ScoreController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('/score', ScoreController::class);
 
 Route::get('/score/user/{userId}', [ScoreController::class, 'showByUserId']);
+Route::get('/rank', [RankController::class, 'showRank']);
 Route::delete('/score/user/{userId}', [ScoreController::class, 'deleteByUserId']);
