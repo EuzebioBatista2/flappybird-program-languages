@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-  <register-component csrf-Token="{{ csrf_token() }}"></register-component>
+  <register-component :error="{{ $errors->toJson() }}" csrf-Token="{{ csrf_token() }}" :old-data="{{ json_encode(old()) }}"></register-component>
 @endsection

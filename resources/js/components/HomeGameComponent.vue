@@ -138,6 +138,32 @@ export default {
       axios.delete(this.url + '/' + 'user' + '/' + this.id)
     },
 
+    searchScoreNew() {
+      axios.get(this.url + '/' + 'user' + '/' + this.id)
+        .then((response) => {
+          this.data = response.data
+        })
+        .then(() => {
+          if(this.data.user) {
+            const modalButton = this.$refs.buttonGame
+            modalButton.click()
+          }
+        })
+    },
+
+    clickButton() {
+      axios.get(this.url + '/' + 'user' + '/' + this.id)
+        .then((response) => {
+          this.data = response.data
+        })
+        .then(() => {
+          if(this.data.user) {
+            const modalButton = this.$refs.buttonGame
+            modalButton.click()
+          }
+        })
+    },
+
     checkScoreDB() {
       axios.get(this.url + '/' + 'user' + '/' + this.id)
         .then((response) => {
@@ -147,13 +173,10 @@ export default {
             this.save()
           } else if(!response.data) {
             this.save()
+            this.searchScoreNew()
           }
         })
         .then(() => {
-          axios.get(this.url + '/' + 'user' + '/' + this.id)
-            .then((response) => {
-              this.data = response.data
-            })
           if(this.data.user) {
             const modalButton = this.$refs.buttonGame
             modalButton.click()
