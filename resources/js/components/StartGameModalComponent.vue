@@ -14,6 +14,9 @@
           </div>
         </div>
         <div class="container">
+          <h5 class="font">Aperte a tecla <b>ESPAÇO</b> caso queira desativar o som!</h5>
+        </div>
+        <div class="container">
           <img src="/images/birdUp.png" alt="passaro inclinado para cima, seta ao lado indicado que ele deve subir" height="150">
         </div>
         <div class="modal-footer">

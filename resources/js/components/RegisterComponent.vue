@@ -79,10 +79,10 @@
 
               <div class="row mb-0">
                 <div class="col-md-6 offset-md-4">
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="btn btn-primary font">
                     Registrar
                   </button>
-                  <a class="btn btn-secondary ms-2" href="/">
+                  <a class="btn btn-secondary ms-2 font" href="/">
                     Página inicial
                   </a>
                 </div>
@@ -130,5 +130,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .font {
+    font-size: 8px;
+  }
 }
 </style>

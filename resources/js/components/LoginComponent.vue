@@ -32,31 +32,16 @@
                 </div>
               </div>
 
-              <div class="row mb-3">
-                <div class="col-md-6 offset-md-4">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember">
-
-                    <label class="form-check-label" for="remember">
-                      Matenha-me conectado
-                    </label>
-                  </div>
-                </div>
-              </div>
-
               <div class="row mb-0">
                 <div class="col-md-8 offset-md-4">
                   <div class="buttons">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary font">
                       Login
                     </button>
-                    <a class="btn btn-secondary" href="/">
+                    <a class="btn btn-secondary font" href="/">
                       Página inicial
                     </a>
                   </div>
-                  <a class="btn btn-link" href="/password/reset">
-                    Esqueci a senha
-                  </a>
                 </div>
               </div>
             </form>
@@ -93,5 +78,16 @@ export default {
 .buttons {
   display: flex;
   gap: 10px;
+}
+
+.link {
+  padding: 0px;
+  margin-top: 6px;
+}
+
+@media (max-width: 480px) {
+  .font {
+    font-size: 8px;
+  }
 }
 </style>

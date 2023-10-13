@@ -1,13 +1,22 @@
 <template>
-  <div class="container font background">
-    
+  <div class="container font">
+    <audio ref="backgroundAudio" loop="loop">
+      <source src="audio/audioInGame.mp3" type="audio/mp3" />
+      seu navegador não suporta este audio
+    </audio>
+
+    <audio ref="backgroundAudioGameOver">
+      <source src="audio/audioGameOver.mp3" type="audio/mp3" />
+      seu navegador não suporta este audio
+    </audio>
+
     <start-game-modal-component></start-game-modal-component>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#startGame" style="display: none;"
-    ref="buttonStartGame"></button>
-    
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#startGame"
+      style="display: none;" ref="buttonStartGame"></button>
+
     <div v-if="data.user" style="position: absolute; height: 300px; width: 300px;">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#endGame"
-      ref="buttonGame" style="display: none;"></button>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#endGame" ref="buttonGame"
+        style="display: none;"></button>
       <end-modal-component :username="data.user.name" id="endGame" :character="data.user.character">
         <template v-slot:content>
           <div class="container">
@@ -23,11 +32,11 @@
         </template>
       </end-modal-component>
     </div>
-    <div class="row background-sky">
-      
-      <div class="col-12 " style="padding: 0px;">
-        
-        <div class="col-12 background" style="padding: 0px;" ref="backgroundSky" @click="birdUp()">
+    <div class="row">
+
+      <div class="col-12 containerBackground" style="padding: 0px;">
+
+        <div class="col-12 backgroundGame" style="padding: 0px;" ref="backgroundSky" @click="birdUp()">
           <img :src="'gif/' + char + '.gif'" alt="passaro" class="imageChar" ref="bird"
             :style="'top: ' + birdTop + 'px;'">
           <div v-for="(barrier, index) in barriers" :key="index" class="pair-of-barriers"
@@ -37,6 +46,12 @@
               <div class="bodyBottom" :style="'height: ' + barrier.heightBottom + 'px;'"></div>
             </div>
           </div>
+        </div>
+        <div class="audioB">
+          <button @click="invertButton()" class="buttonAudio">
+            <img v-if="buttonAudio" src="audio/audio.png" alt="audio aberto" height="30">
+            <img v-else src="audio/noAudio.png" alt="audio aberto" height="30">
+          </button>
         </div>
         <div class="progress">{{ score }}</div>
       </div>
@@ -62,10 +77,27 @@ export default {
       heightBottom: -1,
       onGame: true,
       barrierPosition: -1,
-      data: []
+      data: [],
+      buttonAudio: false,
+      audioGame: 'audioInGame'
     };
   },
   methods: {
+    invertButton() {
+      if (this.buttonAudio === false) {
+        this.$refs.backgroundAudio.play()
+      } else {
+        this.$refs.backgroundAudio.pause()
+      }
+      this.buttonAudio = !this.buttonAudio
+    },
+
+    handleSpaceKey(event) {
+      if (event.keyCode === 32 && this.onGame) {
+        this.invertButton();
+      }
+    },
+
     createBarrier(height, space) {
       for (let i = 0; i <= 5; i++) {
         const heightTop = Math.random() * (height - space)
@@ -92,7 +124,18 @@ export default {
 
     updateCurrentWidth() {
       const backgroundSky = this.$refs.backgroundSky
-      this.currentWidth = backgroundSky.getBoundingClientRect().width
+      console.log(backgroundSky.getBoundingClientRect().width)
+      if(backgroundSky.getBoundingClientRect().width <= 480) {
+        this.currentWidth = 350
+      } else if (backgroundSky.getBoundingClientRect().width > 480 && backgroundSky.getBoundingClientRect().width <= 767) {
+        this.currentWidth = 470
+      } else if (backgroundSky.getBoundingClientRect().width > 767 && backgroundSky.getBoundingClientRect().width <= 991) {
+        this.currentWidth = 760
+      } else if (backgroundSky.getBoundingClientRect().width > 991 && backgroundSky.getBoundingClientRect().width <= 1199) {
+        this.currentWidth = 980
+      } else if (backgroundSky.getBoundingClientRect().width > 1199 && backgroundSky.getBoundingClientRect().width <= 1919) {
+        this.currentWidth = 1180
+      }
       this.middleWidth = this.currentWidth / 2
     },
 
@@ -144,7 +187,7 @@ export default {
           this.data = response.data
         })
         .then(() => {
-          if(this.data.user) {
+          if (this.data.user) {
             const modalButton = this.$refs.buttonGame
             modalButton.click()
           }
@@ -157,7 +200,7 @@ export default {
           this.data = response.data
         })
         .then(() => {
-          if(this.data.user) {
+          if (this.data.user) {
             const modalButton = this.$refs.buttonGame
             modalButton.click()
           }
@@ -171,19 +214,22 @@ export default {
           if (this.score > response.data.score && response.data != null) {
             this.deleteUser()
             this.save()
-          } else if(!response.data) {
+          } else if (!response.data) {
             this.save()
             this.searchScoreNew()
           }
         })
         .then(() => {
-          if(this.data.user) {
+          if (this.data.user) {
             const modalButton = this.$refs.buttonGame
             modalButton.click()
           }
         })
     },
     startGame() {
+      this.$refs.backgroundAudio.play()
+      this.buttonAudio = true
+
       let intervalGame = setInterval(() => {
         this.loadPipes()
         if (this.barriers[0].position <= -130) {
@@ -209,6 +255,8 @@ export default {
             clearInterval(intervalGame)
             clearInterval(intervalBird)
             this.onGame = false
+            this.$refs.backgroundAudio.pause();
+            this.$refs.backgroundAudioGameOver.play();
             if (this.birdTop < this.heightTop && this.barriers[this.barrierPosition].position < this.$refs.bird.offsetLeft + 47) {
               this.birdTop = this.heightTop
             }
@@ -225,12 +273,12 @@ export default {
   },
   updated() {
 
-    if(this.$store.state.onGame) {
+    if (this.$store.state.onGame) {
       this.startGame()
       this.$store.state.onGame = false
     }
   },
-  
+
   mounted() {
     this.updateCurrentWidth()
     this.createBarrier(600, 250);
@@ -238,6 +286,7 @@ export default {
     modalStartButton.click()
 
     window.addEventListener('resize', this.updateCurrentWidth)
+    window.addEventListener('keydown', this.handleSpaceKey);
   }
 };
 </script>
@@ -266,7 +315,7 @@ export default {
   width: 100%;
 }
 
-.background-sky {
+.containerBackground {
   background-image: url('/background/sky.gif');
   background-size: cover;
   height: 600px;
@@ -277,12 +326,18 @@ export default {
   overflow: hidden;
 }
 
+.backgroundGame {
+  height: 600px;
+  min-width: 1200px;
+}
+
 .imageChar {
   position: absolute;
   width: 48px;
   height: 38px;
   left: calc(50% - 30px);
   bottom: 50%;
+  user-select: none;
 }
 
 .pair-of-barriers {
@@ -327,13 +382,65 @@ export default {
   font-size: 20px;
   background: transparent;
 }
+
+.audioB {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  background: transparent;
+}
+
 .container {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
 }
+
 .font {
   font-size: 10px;
 }
+
+.buttonAudio {
+  background: transparent;
+  border: none;
+}
+
+@media (max-width: 480px) {
+  .containerBackground {
+    width: 370px;
+  }
+}
+
+@media(min-width: 481px) and (max-width: 767px) {
+  .containerBackground {
+    width: 480px;
+  }
+}
+
+@media(min-width: 768px) and (max-width: 991px) {
+  .containerBackground {
+    width: 768px;
+  }
+}
+
+@media(min-width: 992px) and (max-width: 1199px) {
+  .containerBackground {
+    width: 992px;
+  }
+}
+
+@media(min-width: 1200px) and (max-width: 1919px) {
+  .containerBackground {
+    width: 1200px;
+  }
+}
+
+@media(min-width: 1920px) {
+  .containerBackground {
+    width: 1920px;
+  }
+}
+
 </style>

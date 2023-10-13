@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container font">
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card background">
@@ -24,10 +24,12 @@
 
 <script>
 export default {
-  
 }
 </script>
 <style scoped>
+.font {
+  font-family: 'supply-Center';
+}
 .containerLink {
   display: flex;
   flex-direction: column;
@@ -35,10 +37,11 @@ export default {
   justify-content: center;
   gap: 10px;
 }
+
 .background {
   background: url('images/birdUp.png');
   background-size: contain;
   background-repeat: no-repeat;
-  background-color: azure;
+  background-color: white;
 }
 </style>

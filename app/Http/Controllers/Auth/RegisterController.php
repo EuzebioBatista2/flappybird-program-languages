@@ -61,6 +61,7 @@ class RegisterController extends Controller
           'email.email' => 'O e-mail inserido não possui um formato valido',
           'password.required' => 'O campo senha deve ser preenchido',
           'password.confirmed' => 'Senhas não conferem',
+          'password.min' => 'É necessário no minimo 8 caracteres',
           'character.required' => 'O campo da linguagem deve ser selecionado'
         ]);
     }
