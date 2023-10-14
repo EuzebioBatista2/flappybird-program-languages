@@ -33,15 +33,13 @@
               </div>
 
               <div class="row mb-0">
-                <div class="col-md-8 offset-md-4">
-                  <div class="buttons">
-                    <button type="submit" class="btn btn-primary font">
-                      Login
-                    </button>
-                    <a class="btn btn-secondary font" href="/">
-                      Página inicial
-                    </a>
-                  </div>
+                <div class="col-md-6 offset-md-4">
+                  <button type="submit" class="btn btn-primary font">
+                    Login
+                  </button>
+                  <a class="btn btn-secondary ms-2 font" href="/">
+                    Página inicial
+                  </a>
                 </div>
               </div>
             </form>
