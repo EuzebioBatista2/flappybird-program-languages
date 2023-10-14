@@ -19,7 +19,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    // use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
@@ -42,7 +42,7 @@ class LoginController extends Controller
     {
     // Valide os dados de entrada do formulário de login
     $request->validate([
-        'email' => 'required|email',
+        'name' => 'required',
         'password' => 'required',
     ]);
 
