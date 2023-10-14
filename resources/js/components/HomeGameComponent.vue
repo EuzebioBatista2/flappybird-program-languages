@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       barriers: [],
-      url: 'http://127.0.0.1:8000/score',
+      url: 'https://flappybird-program-languages-95dca125abe5.herokuapp.com/score',
       currentWidth: '',
       spaceWidth: 350,
       middleWidth: '',
