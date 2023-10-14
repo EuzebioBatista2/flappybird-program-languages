@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header">Login</div>
           <div class="card-body">
-            <form method="POST" action="">
+            <form method="POST" action="https://flappybird-program-languages-95dca125abe5.herokuapp.com/login">
               <input type="hidden" name="_token" :value="csrfToken">
 
               <div class="row mb-3">
