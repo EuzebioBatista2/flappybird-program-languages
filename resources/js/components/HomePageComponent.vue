@@ -2,11 +2,10 @@
   <div class="container font">
     <div class="row justify-content-center">
       <div class="col-md-8">
-        <div class="card background">
+        <div class="card">
           <div class="card-header">FlappyBird</div>
-
           <div class="card-body containerLink"  style="position: relative;">
-            <img src="images/birdUp.png" alt="passaro com seta pra cima" class="background">
+            <img src="images/birdUp.png" alt="passaro com seta pra cima" class="backgroundImage" height="80">
             <button-link-component link="/login">
               <template v-slot:content>Login</template>
             </button-link-component>
