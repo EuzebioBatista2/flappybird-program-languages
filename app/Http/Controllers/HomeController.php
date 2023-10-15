@@ -22,6 +22,7 @@ class HomeController extends Controller
    *
    * @return \Illuminate\Contracts\Support\Renderable
    */
+  // home view, with player data
   public function index()
   {
     return view('home', ['data' => auth()->user()->character, 'id' => auth()->user()->id]);

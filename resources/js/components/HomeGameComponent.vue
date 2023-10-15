@@ -1,5 +1,7 @@
 <template>
   <div class="container font">
+
+    <!-- Audio content  -->
     <audio ref="backgroundAudio" loop="loop">
       <source src="audio/audioInGame.mp3" type="audio/mp3" />
       seu navegador não suporta este audio
@@ -9,11 +11,15 @@
       <source src="audio/audioGameOver.mp3" type="audio/mp3" />
       seu navegador não suporta este audio
     </audio>
+    <!-- Audio content  -->
 
+    <!-- Modal start game -->
     <start-game-modal-component></start-game-modal-component>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#startGame"
       style="display: none;" ref="buttonStartGame"></button>
+    <!-- Modal start game -->
 
+    <!-- Modal end of the game -->
     <div v-if="data.user" style="position: absolute; height: 300px; width: 300px;">
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#endGame" ref="buttonGame"
         style="display: none;"></button>
@@ -32,8 +38,11 @@
         </template>
       </end-modal-component>
     </div>
-    <div class="row">
+    <!-- Modal end of the game -->
 
+
+    <!-- Game page -->
+    <div class="row">
       <div class="col-12 containerBackground" style="padding: 0px;">
 
         <div class="col-12 backgroundGame" style="padding: 0px;" ref="backgroundSky" @click="birdUp()">
@@ -57,6 +66,8 @@
       </div>
     </div>
   </div>
+  <!-- Game page -->
+
 </template>
 
 <script>
@@ -84,6 +95,7 @@ export default {
   },
   methods: {
     invertButton() {
+      //Verify the click in audio button
       if (this.buttonAudio === false) {
         this.$refs.backgroundAudio.play()
       } else {
@@ -93,11 +105,13 @@ export default {
     },
 
     handleSpaceKey(event) {
+      //Verify if the space has been pressed
       if (event.keyCode === 32 && this.onGame) {
         this.invertButton();
       }
     },
 
+    //Creater radom barrier
     createBarrier(height, space) {
       for (let i = 0; i <= 5; i++) {
         const heightTop = Math.random() * (height - space)
@@ -108,11 +122,13 @@ export default {
       }
     },
 
+    //Remove the barrier that passed
     removeBarrier() {
       this.barriers.shift()
       this.barrierPosition -= 1
     },
 
+    //New barrier after tha old barrier
     updateBarriers() {
       this.removeBarrier()
       this.spaceWidth = 350
@@ -122,6 +138,7 @@ export default {
       this.barriers.push({ heightTop, heightBottom, position })
     },
 
+    //Game logic in width
     updateCurrentWidth() {
       const backgroundSky = this.$refs.backgroundSky
       console.log(backgroundSky.getBoundingClientRect().width)
@@ -139,6 +156,7 @@ export default {
       this.middleWidth = this.currentWidth / 2
     },
 
+    //Moving the barriers
     loadPipes() {
       this.barriers[0].position -= 1;
       this.barriers[1].position -= 1;
@@ -148,6 +166,7 @@ export default {
       this.barriers[5].position -= 1;
     },
 
+    //Up the bird
     birdUp() {
       if (this.onGame == true) {
         if (this.birdTop - 50 < -2) {
@@ -158,12 +177,14 @@ export default {
       }
     },
 
+    //Down the bird
     birdDown() {
       if (this.birdTop >= -2 && this.birdTop <= 558) {
         this.birdTop += 1
       }
     },
 
+    //Save the score in database
     save() {
       let formData = new FormData()
 
@@ -177,10 +198,12 @@ export default {
       axios.post(this.url, formData, config)
     },
 
+    //Delete old score
     deleteUser() {
       axios.delete(this.url + '/' + 'user' + '/' + this.id)
     },
 
+    //Update the new score
     searchScoreNew() {
       axios.get(this.url + '/' + 'user' + '/' + this.id)
         .then((response) => {
@@ -207,6 +230,7 @@ export default {
         })
     },
 
+    //Verify if the score needs save or delete
     checkScoreDB() {
       axios.get(this.url + '/' + 'user' + '/' + this.id)
         .then((response) => {
@@ -226,22 +250,27 @@ export default {
           }
         })
     },
+
+    //Game logic in gamestart 
     startGame() {
       this.$refs.backgroundAudio.play()
       this.buttonAudio = true
 
       let intervalGame = setInterval(() => {
+        //Moving barriers
         this.loadPipes()
         if (this.barriers[0].position <= -130) {
           this.updateBarriers()
         }
 
+        //After the barrier passes, increase one more point
         if (this.barriers.some(barrier => barrier.position === this.$refs.bird.offsetLeft - 82)) {
           this.score += 1
           this.heightBottom = -1
           this.heightTop = -1
         }
 
+        //Verify if the bird is between the barriers
         if (this.barriers.some(barrier => barrier.position === this.$refs.bird.offsetLeft + 47)) {
           const index = this.barriers.findIndex(barrier => barrier.position === this.$refs.bird.offsetLeft + 47)
           this.heightTop = this.barriers[index].heightTop
@@ -249,6 +278,7 @@ export default {
           this.barrierPosition = index
         }
 
+        //In case, if the bird touches the barrier
         if (this.heightBottom != -1 && this.heightTop != -1) {
 
           if (this.birdTop < this.heightTop || 559 - this.birdTop < this.heightBottom) {
@@ -273,6 +303,7 @@ export default {
   },
   updated() {
 
+    //Verify the click to gamestart
     if (this.$store.state.onGame) {
       this.startGame()
       this.$store.state.onGame = false
