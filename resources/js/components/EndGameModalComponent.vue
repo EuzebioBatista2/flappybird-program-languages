@@ -23,11 +23,11 @@ export default {
   props: ['id', 'username', 'character'],
   methods: {
     replay() {
-      window.location.href = "http://127.0.0.1:8000/home"
+      window.location.href = "https://flappybird-program-languages-95dca125abe5.herokuapp.com/home"
     },
 
     logout() {
-      const url = "http://127.0.0.1:8000/logout"
+      const url = "https://flappybird-program-languages-95dca125abe5.herokuapp.com/logout"
       const config = {
         headers: {
           "Accept": "application/json"
@@ -35,7 +35,7 @@ export default {
       }
       axios.post(url, "",config)
         .then(() => {
-          window.location.href = "http://127.0.0.1:8000/"
+          window.location.href = "https://flappybird-program-languages-95dca125abe5.herokuapp.com/"
         })
     }
 
