@@ -338,6 +338,7 @@ export default {
   left: calc(50% - 30px);
   bottom: 50%;
   user-select: none;
+  pointer-events: none;
 }
 
 .pair-of-barriers {
