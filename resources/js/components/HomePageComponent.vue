@@ -5,7 +5,8 @@
         <div class="card background">
           <div class="card-header">FlappyBird</div>
 
-          <div class="card-body containerLink">
+          <div class="card-body containerLink"  style="position: relative;">
+            <img src="images/birdUp.png" alt="passaro com seta pra cima" class="background">
             <button-link-component link="/login">
               <template v-slot:content>Login</template>
             </button-link-component>
@@ -39,9 +40,7 @@ export default {
 }
 
 .background {
-  background: url('images/birdUp.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-color: white;
+  position: absolute;
+  left: 10px;
 }
 </style>
