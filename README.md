@@ -15,8 +15,9 @@ Esse projeto foi criado com o intuito de aplicar meus conhecimentos adquiridos n
 
 ## Hospedagem
 
-- **[Heroku](https://id.heroku.com)**
+- **[Railway](https://railway.app)**
 
+- **[FlappyBird](https://flappybird-program-languages-production.up.railway.app)**
 
 ## Agradecimentos
 

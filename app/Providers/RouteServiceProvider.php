@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = 'https://flappybird-program-languages-95dca125abe5.herokuapp.com/home';
+    public const HOME = 'https://flappybird-program-languages-production.up.railway.app/home';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
