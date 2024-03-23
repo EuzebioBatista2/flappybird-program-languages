@@ -141,7 +141,6 @@ export default {
     //Game logic in width
     updateCurrentWidth() {
       const backgroundSky = this.$refs.backgroundSky
-      console.log(backgroundSky.getBoundingClientRect().width)
       if(backgroundSky.getBoundingClientRect().width <= 480) {
         this.currentWidth = 350
       } else if (backgroundSky.getBoundingClientRect().width > 480 && backgroundSky.getBoundingClientRect().width <= 767) {
