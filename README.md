@@ -15,9 +15,7 @@ Esse projeto foi criado com o intuito de aplicar meus conhecimentos adquiridos n
 
 ## Hospedagem
 
-- **[Railway](https://railway.app)**
-
-- **[FlappyBird](https://flappybird-program-languages-production.up.railway.app)**
+- **[FlappyBird](https://vueflappybird.great-site.net)**
 
 ## Agradecimentos
 
@@ -26,6 +24,7 @@ Primeiramente, agradeço a **Mayk**, um amigo de longa data, no qual criou o bac
 
 ## Atualizações
 
+- Fix deploy
 - Bird point
 - Update homePage
 - Update icon

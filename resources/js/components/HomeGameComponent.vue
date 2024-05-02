@@ -78,7 +78,7 @@ export default {
   data() {
     return {
       barriers: [],
-      url: 'https://flappybird-program-languages-production.up.railway.app/score',
+      url: 'https://vueflappybird.great-site.net/score',
       currentWidth: '',
       spaceWidth: 350,
       middleWidth: '',

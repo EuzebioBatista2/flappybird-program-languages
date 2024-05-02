@@ -23,11 +23,11 @@ export default {
   props: ['id', 'username', 'character'],
   methods: {
     replay() {
-      window.location.href = "https://flappybird-program-languages-production.up.railway.app/home"
+      window.location.href = "https://vueflappybird.great-site.net/home"
     },
 
     logout() {
-      const url = "https://flappybird-program-languages-production.up.railway.app/logout"
+      const url = "https://vueflappybird.great-site.net/logout"
       const config = {
         headers: {
           "Accept": "application/json"
@@ -35,7 +35,7 @@ export default {
       }
       axios.post(url, "",config)
         .then(() => {
-          window.location.href = "https://flappybird-program-languages-production.up.railway.app/"
+          window.location.href = "https://vueflappybird.great-site.net/"
         })
     }
 
