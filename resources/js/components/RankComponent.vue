@@ -20,7 +20,7 @@
                   <td v-else class="others">{{ index + 1 }}</td>
                   <td>{{ rank.user.name }}</td>
                   <td>
-                    <img :src="'images/' + rank.user.character + '.png'" alt="Linguagem do jogador" class="imageLenguage">
+                    <img :src="'images/' + rank.user.character + '.webp'" alt="Linguagem do jogador" class="imageLenguage">
                   </td>
                   <td>{{ rank.score }}</td>
                 </tr>

@@ -38,17 +38,17 @@
                 <div class="col-md-6">
                   <div class="row" :class="error.character ? 'is-invalid' : ''">
                     <div class="col-4 radioChoose"><input type="radio" name="character" value="python" :checked="characterInput == 'python'"><img
-                        src="/images/python.png" alt="logo do python" height="50" width="50"></div>
+                        src="/images/python.webp" alt="logo do python" height="50" width="50"></div>
                     <div class="col-4 radioChoose"><input type="radio" name="character" value="java" :checked="characterInput == 'java'"><img
-                        src="/images/java.png" alt="logo do java" height="50" width="50"></div>
-                    <div class="col-4 radioChoose"><input type="radio" name="character" value="C" :checked="characterInput == 'C'"><img src="/images/C.png"
+                        src="/images/java.webp" alt="logo do java" height="50" width="50"></div>
+                    <div class="col-4 radioChoose"><input type="radio" name="character" value="C" :checked="characterInput == 'C'"><img src="/images/C.webp"
                         alt="logo do C" height="50" width="50"></div>
                     <div class="col-4 radioChoose"><input type="radio" name="character" value="javascript" :checked="characterInput == 'javascript'"><img
-                        src="/images/javascript.png" alt="logo do javascript" height="50" width="50"></div>
+                        src="/images/javascript.webp" alt="logo do javascript" height="50" width="50"></div>
                     <div class="col-4 radioChoose"><input type="radio" name="character" value="Csharp" :checked="characterInput == 'Csharp'"><img
-                        src="/images/Csharp.png" alt="logo do Csharp" height="50" width="50"></div>
+                        src="/images/Csharp.webp" alt="logo do Csharp" height="50" width="50"></div>
                     <div class="col-4 radioChoose"><input type="radio" name="character" value="php" :checked="characterInput == 'php'"><img
-                        src="/images/php.png" alt="logo do php" height="50" width="50"></div>
+                        src="/images/php.webp" alt="logo do php" height="50" width="50"></div>
                   </div>
                   <span v-if="error.character" class="invalid-feedback" style="font-size: 10px;" role="alert">
                     <strong>{{ error.character[0] }}</strong>

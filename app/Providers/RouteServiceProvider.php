@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = 'https://vueflappybird.great-site.net/home';
+    public const HOME = 'http://127.0.0.1:8000/home';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

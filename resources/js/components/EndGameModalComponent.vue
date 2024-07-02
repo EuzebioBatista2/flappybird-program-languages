@@ -23,11 +23,11 @@ export default {
   props: ['id', 'username', 'character'],
   methods: {
     replay() {
-      window.location.href = "https://vueflappybird.great-site.net/home"
+      window.location.href = "http://127.0.0.1:8000/home"
     },
 
     logout() {
-      const url = "https://vueflappybird.great-site.net/logout"
+      const url = "http://127.0.0.1:8000/logout"
       const config = {
         headers: {
           "Accept": "application/json"
@@ -35,7 +35,7 @@ export default {
       }
       axios.post(url, "",config)
         .then(() => {
-          window.location.href = "https://vueflappybird.great-site.net/"
+          window.location.href = "http://127.0.0.1:8000/"
         })
     }
 

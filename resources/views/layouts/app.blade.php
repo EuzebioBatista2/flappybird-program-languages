@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="icon" type="image/png" href="/images/birdUp.png">
+    <link rel="icon" type="image/png" href="/images/birdUp.webp">
 
     <title>FlappyBird</title>
 
@@ -20,7 +20,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
   </head>
 
-  <body style="height:100vh; min-height: 650px; width: 100%; background: url('background/landscape.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center">
+  <body style="height:100vh; min-height: 650px; width: 100%; background: url('background/landscape.webp'); background-size: cover; background-repeat: no-repeat; background-position: center">
     <div id="app" style="height: 100%;">
       @if (Route::has('home'))
         

@@ -20,11 +20,16 @@ class ScoreController extends Controller
     }
   }
 
-  //Delete player score
-  public function deleteByUserId($userId) 
+  //Update play score
+  public function updateByUserId(Request $request, $userId)
   {
-    Score::where('userId', $userId)->first()->delete();
+    $score = Score::where('userId', $userId)->first();
+
+    if ($score) {
+        $score->update($request->all());
+    }
   }
+
 
   //Create player score
   public function store(Request $request)

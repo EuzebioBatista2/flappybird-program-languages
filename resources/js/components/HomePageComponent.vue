@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header">FlappyBird</div>
           <div class="card-body containerLink"  style="position: relative;">
-            <img src="images/birdUp.png" alt="passaro com seta pra cima" class="backgroundImage" height="80">
+            <img src="images/birdUp.webp" alt="passaro com seta pra cima" class="backgroundImage" height="80">
             <button-link-component link="/login">
               <template v-slot:content>Login</template>
             </button-link-component>

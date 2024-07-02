@@ -15,15 +15,15 @@ Esse projeto foi criado com o intuito de aplicar meus conhecimentos adquiridos n
 
 ## Hospedagem
 
-- **[FlappyBird](https://vueflappybird.great-site.net)**
+- **[FlappyBird](https://vueflappybird.great-site.net/)**
 
 ## Agradecimentos
 
 Primeiramente, agradeço a **Mayk**, um amigo de longa data, no qual criou o background da nuvens para que eu podesse utilizar no projeto.
 
-
 ## Atualizações
 
+- Fix score
 - Fix deploy
 - Bird point
 - Update homePage
@@ -60,7 +60,6 @@ Primeiramente, agradeço a **Mayk**, um amigo de longa data, no qual criou o bac
 - FEAT:Create Modal
 - FEAT:Create backend score
 - FEAT: Crete pagegame
-
 
 ## Informações adicionais
 

@@ -9,7 +9,7 @@
         </div>
         <div class="modal-body">
           <div class="container">
-            <img src="/images/mouse.png" alt="mouse com o botão esquerdo pressionado" height="150">
+            <img src="/images/mouse.webp" alt="mouse com o botão esquerdo pressionado" height="150">
             <h5 class="font">Clique com o botão <b>ESQUERDO</b> do mouse para fazer o passaro subir e desviar dos obstaculos!</h5>
           </div>
         </div>
@@ -17,7 +17,7 @@
           <h5 class="font">Aperte a tecla <b>ESPAÇO</b> caso queira desativar o som!</h5>
         </div>
         <div class="container">
-          <img src="/images/birdUp.png" alt="passaro inclinado para cima, seta ao lado indicado que ele deve subir" height="150">
+          <img src="/images/birdUp.webp" alt="passaro inclinado para cima, seta ao lado indicado que ele deve subir" height="150">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="startGame">Iniciar o jogo</button>

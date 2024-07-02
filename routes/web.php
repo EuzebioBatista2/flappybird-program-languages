@@ -36,5 +36,5 @@ Route::middleware(['auth'])->group(function () {
 
   Route::get('/score/user/{userId}', [ScoreController::class, 'showByUserId']);
   Route::post('/score', [ScoreController::class, 'store']);
-  Route::delete('/score/user/{userId}', [ScoreController::class, 'deleteByUserId']);
+  Route::post('/score/update/{userId}', [ScoreController::class, 'updateByUserId']);
 });
